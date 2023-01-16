@@ -25,11 +25,7 @@ jobs:
         pwd
         ls
         ls ~/
-    - name: Copy folder content recursively to remote
-      uses: garygrossgarten/github-action-scp@release
-      with:
-        local: docker-compose.yml
-        remote: .
-        host: ${{ secrets.DO_HOST }}
-        username: ${{ secrets.DO_USER }}
-        password: ${{ secrets.DO_PASSWORD }}
+    - name: Pass Docker-Compose File to DO
+      run: |
+        apt-get install sshpass -y
+        sshpass -p ${{ secrets.DO_PASSWORD }} scp docker-compose.yml ${{ secrets.DO_USER }}@${{secrets.DO_HOST}}:~/
