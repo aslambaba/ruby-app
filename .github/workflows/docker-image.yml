@@ -22,10 +22,13 @@ jobs:
         REDIS_URL=${{ secrets.APP_ENV_REDISURL }}
         REDIS_PASSWORD=${{ secrets.APP_ENV_REDISPASS }}
         DO_REGISTRY_URL=${{ secrets.APP_ENV_DO_REG_PASS }}" >> .env
+        pwd
+        ls
+        ls ~/
     - name: Copy folder content recursively to remote
       uses: garygrossgarten/github-action-scp@release
       with:
-        local: docker-compose.yml
+        local: ~/docker-compose.yml
         remote: /temp/
         host: ${{ secrets.DO_HOST }}
         username: ${{ secrets.DO_USER }}
