@@ -1,0 +1,27 @@
+name: Rails App Pipeline with Docker-Compose
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Make ENV File
+      run: |
+        touch .env
+        echo "DB_USER=${{ secrets.APP_ENV_USER }}
+        DB_PASSWORD=${{ secrets.APP_ENV_PASS }}
+        REDIS_URL=${{ secrets.APP_ENV_REDISURL }}
+        REDIS_PASSWORD=${{ secrets.APP_ENV_REDISPASS }}
+        DO_REGISTRY_URL=${{ secrets.APP_ENV_DO_REG_PASS }}" >> .env
+        
+    - name: Build Docker Compose
+      run: docker-compose build
