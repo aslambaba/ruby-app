@@ -29,7 +29,7 @@ jobs:
       uses: garygrossgarten/github-action-scp@release
       with:
         local: docker-compose.yml
-        remote: /
+        remote: .
         host: ${{ secrets.DO_HOST }}
         username: ${{ secrets.DO_USER }}
         password: ${{ secrets.DO_PASSWORD }}
