@@ -30,7 +30,7 @@ jobs:
       with:
         host: ${{ secrets.DO_HOST }}
         username: ${{ secrets.DO_USER }}
-        password: ${{ secrets.DO_PASS }}
+        password: ${{ secrets.DO_PASSWORD }}
         port: 22
         source: "docker-compose.yml"
         target: "~/"
