@@ -25,6 +25,12 @@ jobs:
         pwd
         ls
         ls ~/
-    - name: Pass Docker-Compose File to DO
-      run: |
-        sshpass -p ${{ secrets.DO_PASSWORD }} scp docker-compose.yml ${{ secrets.DO_USER }}@${{secrets.DO_HOST}}:~/
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.DO_HOST }}
+        username: ${{ secrets.DO_USER }}
+        password: ${{ secrets.DO_PASS }}
+        port: 22
+        source: "docker-compose.yml"
+        target: "~/"
