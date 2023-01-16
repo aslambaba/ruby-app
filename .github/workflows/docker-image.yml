@@ -27,5 +27,4 @@ jobs:
         ls ~/
     - name: Pass Docker-Compose File to DO
       run: |
-        ## sudo apt-get install sshpass -y
         sshpass -p ${{ secrets.DO_PASSWORD }} scp docker-compose.yml ${{ secrets.DO_USER }}@${{secrets.DO_HOST}}:~/
