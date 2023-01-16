@@ -22,13 +22,11 @@ jobs:
         REDIS_URL=${{ secrets.APP_ENV_REDISURL }}
         REDIS_PASSWORD=${{ secrets.APP_ENV_REDISPASS }}
         DO_REGISTRY_URL=${{ secrets.APP_ENV_DO_REG_PASS }}" >> .env
-    - name: Build Docker Compose
-      run: docker-compose build
-    - name: Install doctl             
-      uses: digitalocean/action-doctl@v2
+    - name: Copy folder content recursively to remote
+      uses: garygrossgarten/github-action-scp@release
       with:
-          token: ${{ secrets.DO_TOKEN }}
-    - name: push image to digitalocean
-      run: |
-        doctl registry login
-        docker-compose push
+        local: docker-compose.yml
+        remote: /temp/
+        host: ${{ secrets.DO_HOST }}
+        username: ${{ secrets.DO_USER }}
+        password: ${{ secrets.DO_PASSWORD }}
