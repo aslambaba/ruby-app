@@ -36,8 +36,6 @@ jobs:
         target: "~/"
     - name: Stop Running Containers and remove old images
       run: |
-        docker-compose down
-        docker rm images $(docker images -aq)
         docker images
         docker ps -a
     
