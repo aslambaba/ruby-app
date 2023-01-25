@@ -42,7 +42,7 @@ jobs:
         username: ${{ secrets.DO_USER }}
         password: ${{ secrets.DO_PASSWORD }}
         port: 22
-        source: "docker-compose.yml"
+        source: "docker-compose.yml,.env"
         target: "~/"
     - name: Deploy to DigitalOcean Droplet
       uses: appleboy/ssh-action@master
