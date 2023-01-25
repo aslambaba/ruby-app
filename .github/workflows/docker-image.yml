@@ -25,6 +25,10 @@ jobs:
         pwd
         ls
         ls ~/
+    - name: Build and Up Container
+      run: |
+        docker-compose -f docker-compose.yml build
+        docker-compose -f docker-compose.yml push
     - name: copy file via ssh password
       uses: appleboy/scp-action@master
       with:
@@ -34,11 +38,15 @@ jobs:
         port: 22
         source: "docker-compose.yml"
         target: "~/"
-    - name: Build and Up Container
-      run: |
-        docker-compose -f docker-compose.yml build
-        docker-compose -f docker-compose.yml up
-        
+    - name: Deploy to DigitalOcean Droplet
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{secrets.DO_HOST}}
+        username: ${{secrets.DO_USER}}
+        password: ${{secrets.DO_PASSWORD}}
+        script: |
+          docker-compose -f docker-compose.yml pull
+          docker-compose -f docker-compose.yml up
     - name: Check Docker-Compose status
       run: |
         echo "DOCKER IMAGES"
