@@ -34,10 +34,21 @@ jobs:
         port: 22
         source: "docker-compose.yml"
         target: "~/"
-    - name: Stop Running Containers and remove old images
+    - name: Build and Up Container
       run: |
-        docker rmi $(docker images -q)
+        docker-compose -f docker-compose.yml build
+        docker-compose -f docker-compose.yml up
+        
+    - name: Check Docker-Compose status
+      run: |
+        echo "DOCKER IMAGES"
         docker images
+        echo "DOCKER PS -A"
+        docker ps -a
+        echo "DOCKER-COMPOSE IMAGES"
+        docker-compose images
+        echo "DOCKER_COMPOSE PS"
+        docker-compose ps
     
     
     
